@@ -17,8 +17,6 @@ Resources:
           AttributeType: S
         - AttributeName: PersonName
           AttributeType: S
-        - AttributeName: Age
-          AttributeType: N
       KeySchema:
         - AttributeName: City
           KeyType: HASH
