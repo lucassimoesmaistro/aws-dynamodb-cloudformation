@@ -31,4 +31,4 @@ Resources:
 Outputs:
   TableNameOutput:
     Description: "DynamoDB table Name"
-    Value: !Ref DynamoDBTable
+    Value: !Ref TableName

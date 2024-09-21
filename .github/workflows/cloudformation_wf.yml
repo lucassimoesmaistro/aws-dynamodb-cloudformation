@@ -40,5 +40,6 @@ jobs:
           aws cloudformation deploy \
             --template-file DynamoDB.yml \
             --stack-name DynamoDBStack \
-            --capabilities CAPABILITY_NAMED_IAM
+            --capabilities CAPABILITY_NAMED_IAM \
+            --parameter-overrides TableName=NamePerCity
 
