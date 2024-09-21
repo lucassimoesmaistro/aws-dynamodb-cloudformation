@@ -36,8 +36,9 @@ jobs:
 
       - name: Deploy CloudFormation stack
         run: |
+          cd infra &&
           aws cloudformation deploy \
-            --template-file ../../infra/DynamoDB.yml \
+            --template-file DynamoDB.yml \
             --stack-name DynamoDBStack \
             --capabilities CAPABILITY_NAMED_IAM
 
