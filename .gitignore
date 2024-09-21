@@ -1,0 +1,53 @@
+# GitHub Actions
+# Ignore logs and temporary files generated during GitHub Actions runs
+# (Though GitHub Actions itself doesn't create these files in the repository,
+# it’s good to ignore them in case they appear locally)
+*.log
+*.tmp
+*.bak
+*.swp
+
+# CloudFormation
+# Ignore output or local state files used during CloudFormation operations
+*.out
+*.template
+*.stack
+*.json # If using JSON-formatted templates, but keeping YAML versions
+
+# AWS CLI local state files
+.aws-sam
+.aws/ # Contains AWS CLI cache and credentials, don't push sensitive info
+
+# Ignore AWS credentials (if any are accidentally added locally)
+*.pem
+*.key
+.aws/credentials
+.aws/config
+
+# Terraform (if using for part of your IaC stack alongside CloudFormation)
+*.tfstate
+*.tfstate.*
+.terraform/
+crash.log
+
+# macOS system files
+.DS_Store
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.iml
+*.sublime-project
+*.sublime-workspace
+
+# Python (if you’re using Python scripts for automation)
+*.pyc
+__pycache__/
+
+# Ignore node_modules if using any JavaScript for automation or tools
+node_modules/
+npm-debug.log
+
+# General backup files
+*.bak
+*.swp

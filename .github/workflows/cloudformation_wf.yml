@@ -1,0 +1,43 @@
+name: Deploy DynamoDB
+
+on:
+  workflow_call:
+    inputs:
+      environment:
+        type: string
+        required: true
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  jobDynamoDb:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Read environment configuration
+        id: read-env-config
+        run: |
+          CONFIG=$(jq -r ".${{ inputs.environment }}" ./infra/config.json)
+          echo "aws_account=$(echo $CONFIG | jq -r '.aws_account')" >> $GITHUB_ENV
+          echo "aws_region=$(echo $CONFIG | jq -r '.aws_region')" >> $GITHUB_ENV
+          echo "aws_assume_role_arn=$(echo $CONFIG | jq -r '.aws_assume_role_arn')" >> $GITHUB_ENV
+
+      - name: AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ env.aws_assume_role_arn }}
+          role-session-name: GitHub_to_AWS_via_FederatedOIDC
+          aws-region: ${{ env.aws_region }}
+
+      - name: Deploy CloudFormation stack
+        run: |
+          aws cloudformation deploy \
+            --template-file DynamoDB.yml \
+            --stack-name DynamoDBStack \
+            --capabilities CAPABILITY_NAMED_IAM
+
